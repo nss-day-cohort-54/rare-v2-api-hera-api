@@ -1,0 +1,28 @@
+[
+    {
+        "model": "rareapi.reaction",
+        "pk": 1,
+        "fields": {
+            "label": "WOW",
+            "image_url": "https://c.tenor.com/l5_u4JytFLYAAAAC/wow-emoji.gif"
+        }
+    },
+
+    {
+        "model": "rareapi.reaction",
+        "pk": 2,
+        "fields": {
+            "label": "LOVE",
+            "image_url": "https://www.shareicon.net/data/256x256/2016/08/01/640384_heart_496x512.png"
+        }
+    },
+
+    {
+        "model": "rareapi.reaction",
+        "pk": 3,
+        "fields": {
+            "label": "LIKE",
+            "image_url": "https://www.kindpng.com/picc/m/269-2690220_emoticon-like-button-smiley-facebook-social-media-facebook.png"
+        }
+    }
+]

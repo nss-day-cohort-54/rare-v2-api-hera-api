@@ -1,7 +1,6 @@
 from .subscription import Subscription
 from .category import Category
 from .comment import Comment
-from .demotion_que import DemotionQueue
 from .post_reaction import PostReaction
 from .post_tag import PostTag
 from .post import Post

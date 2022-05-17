@@ -1,0 +1,13 @@
+[
+    {
+        "model": "rareapi.rareuser",
+        "pk": 1,
+        "fields": {
+            "bio": "just a small town girl",
+            "profile_image_url": "https://media.resources.festicket.com/www/artists/Journey.jpeg",
+            "created_on": "2022-01-05",
+            "active": true,
+            "user": 1
+        }
+    }
+]

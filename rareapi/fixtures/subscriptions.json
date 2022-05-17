@@ -1,0 +1,34 @@
+[
+    {
+        "model": "rareapi.subscription",
+        "pk": 1,
+        "fields": {
+            "follower": 2,
+            "author": 1,
+            "created_on": "2022-04-20",
+            "ended_on": null
+        }
+    },
+
+    {
+        "model": "rareapi.subscription",
+        "pk": 2,
+        "fields": {
+            "follower": 3,
+            "author": 2,
+            "created_on": "2022-02-10",
+            "ended_on": "2022-04-20"
+        }
+    },
+
+    {
+        "model": "rareapi.subscription",
+        "pk": 3,
+        "fields": {
+            "follower": 1,
+            "author": 3,
+            "created_on": "2022-01-15",
+            "ended_on": null
+        }
+    }
+]

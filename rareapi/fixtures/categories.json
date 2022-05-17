@@ -1,0 +1,25 @@
+[
+    {
+        "model": "rareapi.category",
+        "pk": 1,
+        "fields": {
+            "label": "stuff"
+        }
+    },
+
+    {
+        "model": "rareapi.category",
+        "pk": 2,
+        "fields": {
+            "label": "things"
+        }
+    },
+
+    {
+        "model": "rareapi.category",
+        "pk": 3,
+        "fields": {
+            "label": "food"
+        }
+    }
+]

@@ -1,0 +1,33 @@
+[
+    {
+        "model": "rareapi.tag",
+        "pk": 1,
+        "fields": {
+            "label": "funny"
+        }
+    },
+
+    {
+        "model": "rareapi.tag",
+        "pk": 2,
+        "fields": {
+            "label": "crazy"
+        }
+    },
+
+    {
+        "model": "rareapi.tag",
+        "pk": 3,
+        "fields": {
+            "label": "scary"
+        }
+    },
+
+    {
+        "model": "rareapi.tag",
+        "pk": 4,
+        "fields": {
+            "label": "stinky"
+        }
+    }
+]
