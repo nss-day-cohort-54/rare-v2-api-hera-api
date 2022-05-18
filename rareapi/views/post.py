@@ -36,6 +36,20 @@ class PostView(ViewSet):
         """Returns:
             Response -- JSON serialized list of posts
         """
+        
+    def create(self, request):
+        
+        """Handle POST operations
+
+        Returns:
+            Response -- JSON serialized game review instance
+        """
+        author = RareUser.objects.get(user=request.auth.user)
+        serializer = CreatePostSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(author=author)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -64,6 +78,14 @@ class PostSerializer(serializers.ModelSerializer):
         
         # Define POST request function for creating posts
         # Add CreatePostSerializer
+        
+class CreatePostSerializer(serializers.ModelSerializer):
+    """JSON serializer for creating game reviews
+    """
+    class Meta:
+        model = Post
+        fields = ('id', 'title', 'publication_date', 'image_url', 'content', 'approved', 
+        )
         
         # Define DELETE request function for deleting posts
         
