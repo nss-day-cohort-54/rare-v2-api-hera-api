@@ -5,6 +5,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from rareapi.models.comment import Comment
+from rareapi.models.rare_user import RareUser
 
 
 class CommentView(ViewSet):
@@ -35,10 +36,11 @@ class CommentView(ViewSet):
         Returns:
             Response -- JSON serialized game instance
         """
-        
+
+        rareuser = RareUser.objects.get(user=request.auth.user)
         serializer = CreateCommentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer.save(rareuser=rareuser)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -47,7 +49,8 @@ class CommentSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Comment
-        fields = ['id', 'post', 'author', 'content', 'created_on']
+        fields = ('id', 'post', 'author', 'content', 'created_on',)
+        depth = 1
 
 
 class CreateCommentSerializer(serializers.ModelSerializer):
