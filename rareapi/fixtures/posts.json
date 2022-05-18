@@ -6,10 +6,10 @@
             "user": 1,
             "category": 1,
             "title": "coding is easier with journey ad koolaid",
-            "publication_date": "2022-05-17",
+            "publication_date": "2022-05-25",
             "image_url": "https://imageio.forbes.com/blogs-images/forbestechcouncil/files/2019/01/canva-photo-editor-8-7.png?format=png&width=1200",
             "content": "one day we will all be RICH",
-            "approved": "True"
+            "approved": true
         }
     },
 
@@ -20,10 +20,10 @@
             "user": 1,
             "category": 2,
             "title": "pizza is delicious",
-            "publication_date": "2022-05-17",
+            "publication_date": "2022-05-15",
             "image_url": "https://www.simplyrecipes.com/thmb/8caxM88NgxZjz-T2aeRW3xjhzBg=/2000x1125/smart/filters:no_upscale()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2019__09__easy-pepperoni-pizza-lead-3-8f256746d649404baa36a44d271329bc.jpg",
             "content": "i really enjoy eating pizza",
-            "approved": "True"
+            "approved": false
         }
     },
 
@@ -37,7 +37,7 @@
             "publication_date": "2022-05-17",
             "image_url": "https://www.rollingstone.com/wp-content/uploads/2018/06/rs-194720-153100963.jpg",
             "content": "THE BOSS",
-            "approved": "True"
+            "approved": true
         }
     }
 ]
