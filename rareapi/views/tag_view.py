@@ -20,15 +20,15 @@ class TagView(ViewSet):
         return Response(serializer.data)
 
 
-def list(self, request):
-    """Handle GET requests to get all tags
+    def list(self, request):
+        """Handle GET requests to get all tags
 
-        Returns:
-            Response -- JSON serialized list of game types
-        """
-    tags = Tag.objects.all()
-    serializer = TagSerializer(tags, many=True)
-    return Response(serializer.data)
+            Returns:
+                Response -- JSON serialized list of game types
+            """
+        tags = Tag.objects.all()
+        serializer = TagSerializer(tags, many=True)
+        return Response(serializer.data)
 
 
 class TagSerializer(serializers.ModelSerializer):
