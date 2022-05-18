@@ -40,6 +40,19 @@ class CategoryView(ViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    def update(self, request, pk):
+        """Handle PUT requests for a game
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+
+        category = Category.objects.get(pk=pk)
+        serializer = CreateCategorySerializer(category, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
         
         
 class CategorySerializer(serializers.ModelSerializer):
