@@ -19,10 +19,13 @@ from django.urls import path
 from rest_framework import routers
 
 from rareapi.views.category import CategoryView
+from rareapi.views.post import PostView
 
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'categories', CategoryView, 'category')
+router.register(r'posts', PostView, 'post')
+
 
 
 urlpatterns = [
