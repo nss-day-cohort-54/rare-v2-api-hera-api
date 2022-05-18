@@ -4,6 +4,8 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from rareapi.models import Tag
+from django.core.exceptions import ValidationError
+
 
 
 class TagView(ViewSet):
@@ -38,14 +40,38 @@ class TagView(ViewSet):
         """
 
         tag = Tag.objects.get(pk=pk)
-        tag.label = request.data["label"]
-        tag.save()
-
+        serializer = CreateTagSerializer(tag, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+    def destroy(self, request, pk):
+        tag = Tag.objects.get(pk=pk)
+        tag.delete()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+    def create(self, request):
+        """Handle POST operations
+
+        Returns:
+            Response -- JSON serialized game instance
+        """
+        # tag = Tag.objects.get(user=request.auth.user)
+        serializer = CreateTagSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class TagSerializer(serializers.ModelSerializer):
     """JSON serializer for game types
     """
     class Meta:
+        model = Tag
+        fields = ('id', 'label')
+
+class CreateTagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
         model = Tag
         fields = ('id', 'label')
