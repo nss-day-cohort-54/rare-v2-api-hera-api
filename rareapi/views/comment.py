@@ -35,11 +35,10 @@ class CommentView(ViewSet):
         Returns:
             Response -- JSON serialized game instance
         """
-
-        comment = Comment.objects.get(user=request.auth.user)
+        
         serializer = CreateCommentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(comment=comment)
+        serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -54,4 +53,4 @@ class CommentSerializer(serializers.ModelSerializer):
 class CreateCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['id', 'post', 'content', 'created_on']
+        fields = ['id', 'content']
