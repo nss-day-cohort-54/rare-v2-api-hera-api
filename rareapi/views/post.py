@@ -1,4 +1,5 @@
 """View module for handling requests about posts"""
+from datetime import date
 from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
@@ -28,8 +29,8 @@ class PostView(ViewSet):
     
     def list(self, request):
         """Handle GET requests to get all posts"""
-        
-        posts = Post.objects.filter(approved=True).order_by('publication_date')
+        today = date.today()
+        posts = Post.objects.filter(approved=True, publication_date__lte=today).order_by('publication_date')
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
@@ -47,7 +48,7 @@ class PostView(ViewSet):
         author = RareUser.objects.get(user=request.auth.user)
         serializer = CreatePostSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(author=author)
+        serializer.save(user=author)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 class UserSerializer(serializers.ModelSerializer):
@@ -84,7 +85,7 @@ class CreatePostSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Post
-        fields = ('id', 'title', 'publication_date', 'image_url', 'content', 'approved', 
+        fields = ('id', 'title', 'publication_date', 'image_url', 'content', 'approved', 'category' 
         )
         
         # Define DELETE request function for deleting posts
