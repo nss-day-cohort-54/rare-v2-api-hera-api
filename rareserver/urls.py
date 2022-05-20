@@ -21,6 +21,7 @@ from rareapi.views import TagView
 from django.urls import path
 from rareapi.views import register_user, login_user
 from rareapi.views.category import CategoryView
+from rareapi.views.comment import CommentView
 from rareapi.views.post import PostView
 from rareapi.views.post_tag import PostTagView
 from rareapi.views.rare_user_view import RareUserView
@@ -32,11 +33,13 @@ router.register(r'categories', CategoryView, 'category')
 router.register(r'posts', PostView, 'post')
 router.register(r'posttags', PostTagView, 'posttag')
 router.register(r'tags', TagView, 'tag')
+router.register(r'comments', CommentView, 'comment')
+
 router.register(r'users', RareUserView, 'rareuser')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register', register_user),
-    path('login', login_user), 
+    path('login', login_user),
     path('', include(router.urls)),
 ]
