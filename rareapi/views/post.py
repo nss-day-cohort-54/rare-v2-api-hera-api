@@ -45,7 +45,6 @@ class PostView(ViewSet):
         
     @action(methods=["get"], detail=False)
     def my_posts(self, request):
-        today = date.today()
         user = RareUser.objects.get(user=request.auth.user)
         # (user on the left side is the property on Post you are referring to, 
         # user on the right is the one you just defined that you want to compare it to)
@@ -65,7 +64,8 @@ class PostView(ViewSet):
         serializer = CreatePostSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(user=author)
-        post = Post.objects.get(pk=serializer.data['id'])
+        post = Post.objects.get(pk=serializer.data["id"])
+        post.tag.add(*request.data["tag"])
         # post.tags.add(*request.data[array])
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
@@ -95,7 +95,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'title', 'publication_date', 'image_url', 'content', 'approved', 
-                  'category', 'user', 'is_authorized')
+                  'category', 'user', 'tag', 'is_authorized')
         depth = 2      
         
         
@@ -108,8 +108,7 @@ class CreatePostSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Post
-        fields = ('id', 'title', 'publication_date', 'image_url', 'content', 'approved', 'category' 
-        )
+        fields = ('id', 'title', 'publication_date', 'image_url', 'content', 'approved', 'category', 'tag')
         
         # Define DELETE request function for deleting posts
         
