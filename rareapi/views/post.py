@@ -1,10 +1,12 @@
 """View module for handling requests about posts"""
 from datetime import date
 from django.http import HttpResponseServerError
+from rest_framework.decorators import action
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 from rareapi.models import Post
 from rareapi.models import RareUser
 from django.contrib.auth.models import User
@@ -31,12 +33,24 @@ class PostView(ViewSet):
         """Handle GET requests to get all posts"""
         today = date.today()
         posts = Post.objects.filter(approved=True, publication_date__lte=today).order_by('publication_date')
+        # Q(user=request.auth.user)
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
         """Returns:
             Response -- JSON serialized list of posts
         """
+        
+    @action(methods=["get"], detail=False)
+    def my_posts(self, request):
+        today = date.today()
+        user = RareUser.objects.get(user=request.auth.user)
+        # (user on the left side is the property on Post you are referring to, 
+        # user on the right is the one you just defined that you want to compare it to)
+        posts = Post.objects.filter(user=user).order_by('publication_date')
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
+    
         
     def create(self, request):
         
