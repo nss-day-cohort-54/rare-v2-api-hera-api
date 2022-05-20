@@ -10,3 +10,11 @@ class Post(models.Model):
     content = models.CharField(max_length=150)
     approved = models.BooleanField()
     
+    @property
+    def is_authorized(self):
+        return self.__is_authorized
+    
+    @is_authorized.setter
+    def is_authorized(self,value):
+        self.__is_authorized = value
+    
