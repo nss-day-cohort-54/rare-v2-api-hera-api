@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import serializers, status
 from rareapi.models.comment import Comment
 from rareapi.models.rare_user import RareUser
+from django.contrib.auth.models import User
 
 
 class CommentView(ViewSet):
@@ -45,12 +46,28 @@ class CommentView(ViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'first_name', 'last_name')
+
+
+class RareUserSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = RareUser
+        fields = ('id', 'bio', 'user')
+
+
 class CommentSerializer(serializers.ModelSerializer):
     """JSON serializer for game types
     """
+    author = RareUserSerializer()
+
     class Meta:
         model = Comment
-        fields = ('id', 'post', 'author', 'content', 'created_on',)
+        fields = ('id', 'post', 'author', 'content', 'created_on')
         depth = 1
 
 
