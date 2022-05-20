@@ -9,4 +9,4 @@ class Post(models.Model):
     image_url = models.CharField(max_length=500)
     content = models.CharField(max_length=150)
     approved = models.BooleanField()
-    
+    tag = models.ManyToManyField("Tag", through="PostTag", related_name="posts")
