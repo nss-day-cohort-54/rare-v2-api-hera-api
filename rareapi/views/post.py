@@ -30,7 +30,10 @@ class PostView(ViewSet):
     def list(self, request):
         """Handle GET requests to get all posts"""
         today = date.today()
+        user = RareUser.objects.get(user=request.auth.user)
         posts = Post.objects.filter(approved=True, publication_date__lte=today).order_by('publication_date')
+        for post in posts: 
+            post.is_authorized = post.user == user
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
@@ -49,7 +52,14 @@ class PostView(ViewSet):
         serializer = CreatePostSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(user=author)
+        post = Post.objects.get(pk=serializer.data['id'])
+        # post.tags.add(*request.data[array])
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    def destroy(self, request, pk):
+        post = Post.objects.get(pk=pk)
+        post.delete()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
     
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -72,7 +82,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'title', 'publication_date', 'image_url', 'content', 'approved', 
-                  'category', 'user')
+                  'category', 'user', 'is_authorized')
         depth = 2      
         
         
