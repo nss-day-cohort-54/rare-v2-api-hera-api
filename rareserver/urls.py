@@ -22,6 +22,8 @@ from django.urls import path
 from rareapi.views import register_user, login_user
 from rareapi.views.category import CategoryView
 from rareapi.views.post import PostView
+from rareapi.views.rare_user_view import RareUserView
+
 
 router = routers.DefaultRouter(trailing_slash=False)
 
@@ -29,7 +31,7 @@ router.register(r'categories', CategoryView, 'category')
 router.register(r'posts', PostView, 'post')
 
 router.register(r'tags', TagView, 'tag')
-
+router.register(r'users', RareUserView, 'rareuser')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
