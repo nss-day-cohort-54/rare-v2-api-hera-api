@@ -27,7 +27,8 @@ class CommentView(ViewSet):
         Returns:
             Response -- JSON serialized list of game types
         """
-        comments = Comment.objects.all()
+        post = self.request.query_params.get("post", None)
+        comments = Comment.objects.filter(post_id=post)
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
 
