@@ -66,8 +66,30 @@ class PostView(ViewSet):
         serializer.save(user=author)
         post = Post.objects.get(pk=serializer.data["id"])
         post.tag.add(*request.data["tag"])
-        # post.tags.add(*request.data[array])
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    def update(self, request, pk):
+        # Just like in the retrieve method, we grab the Game object we want from 
+        # the database. Each of the next lines are setting the fields on game 
+        # to the values coming from the client, like in the create method. 
+        # After all the fields are set, the changes are saved to the database.
+        """Handle PUT requests for a game
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+        author = RareUser.objects.get(user=request.auth.user)
+        post = Post.objects.get(pk=pk)
+        serializer = CreatePostSerializer(post, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=author)
+        # post = Post.objects.get(pk=serializer.data["id"])
+        post.tag.add(*request.data["tag"])
+        # tags??
+        # categories = Categories.objects.get(pk=request.data["categories"])
+        # game.categories = categories
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
     
     def destroy(self, request, pk):
         post = Post.objects.get(pk=pk)
