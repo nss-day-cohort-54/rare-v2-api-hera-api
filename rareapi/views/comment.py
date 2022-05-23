@@ -44,6 +44,18 @@ class CommentView(ViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save(author=author)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    def update(self, request, pk):
+        """Handle PUT requests for a comment
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+        comment = Comment.objects.get(pk=pk)
+        serializer = CreateCommentSerializer(comment, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
 
 
 class UserSerializer(serializers.ModelSerializer):
